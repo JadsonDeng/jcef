@@ -7,7 +7,6 @@ import org.cef.CefApp;
 import org.cef.CefClient;
 import org.cef.CefSettings;
 import org.cef.browser.CefBrowser;
-import sun.lwawt.macosx.CEmbeddedFrame;
 
 import javax.swing.*;
 import java.awt.*;
@@ -30,7 +29,8 @@ public class App {
         });
 
         builder.addJcefArgs(args);
-        builder.setSkipInstallation(false);
+        builder.setSkipInstallation(true);
+        builder.getCefSettings().windowless_rendering_enabled = true;
 
         CefApp app = builder.build();
         CefBuildInfo buildInfo = CefBuildInfo.fromClasspath();
