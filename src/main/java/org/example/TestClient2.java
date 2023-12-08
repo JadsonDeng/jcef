@@ -13,6 +13,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
 import java.io.IOException;
 
 public class TestClient2 extends JFrame {
@@ -45,28 +46,27 @@ public class TestClient2 extends JFrame {
         this.browserUI = browser.getUIComponent();
 
         this.getContentPane().add(browserUI, BorderLayout.CENTER);
-        this.setUndecorated(true); // 不显示顶部按钮，需要放在pack()上面
+//        this.setUndecorated(true); // 不显示顶部按钮，需要放在pack()上面
         this.pack();
         this.setSize(800, 600);
         this.setVisible(true);
-
+        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         this.addWindowListener(new WindowAdapter() {
             @Override
-            public void windowClosing(WindowEvent e) {
+            public void windowClosed(WindowEvent e) {
                 CefApp.getInstance().dispose();
                 dispose();
             }
+
+
         });
 
 
-//        this.getRootPane().setWindowDecorationStyle(JRootPane.NONE);
-        GraphicsEnvironment graphicsEnvironment = GraphicsEnvironment.getLocalGraphicsEnvironment();
-        GraphicsDevice screenDeviceMain = graphicsEnvironment.getDefaultScreenDevice();
-        screenDeviceMain.setFullScreenWindow(this);
     }
 
     public static void main(String[] args) throws UnsupportedPlatformException, CefInitializationException, IOException, InterruptedException {
-        new TestClient2("https://www.baidu.com", true, false, args);
+        HttpServer.startServer();
+        new TestClient2("http://127.0.0.1:3301", true, false, args);
     }
 }
